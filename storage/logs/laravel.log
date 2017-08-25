@@ -8246,3 +8246,34 @@ Stack trace:
 #25 C:\xampp\htdocs\project\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php(122): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
 #26 C:\xampp\htdocs\project\artisan(35): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
 #27 {main}  
+[2017-08-25 17:36:00] production.ERROR: Symfony\Component\Console\Exception\CommandNotFoundException: Command "generate" is not defined.
+
+Did you mean one of these?
+    event:generate
+    key:generate in /var/www/html/wiploo/vendor/symfony/console/Application.php:579
+Stack trace:
+#0 /var/www/html/wiploo/vendor/symfony/console/Application.php(204): Symfony\Component\Console\Application->find('generate')
+#1 /var/www/html/wiploo/vendor/symfony/console/Application.php(130): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(122): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /var/www/html/wiploo/artisan(35): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 {main}  
+[2017-08-25 17:36:33] production.ERROR: ErrorException: file_get_contents(/var/www/html/wiploo/.env): failed to open stream: No such file or directory in /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Foundation/Console/KeyGenerateCommand.php:95
+Stack trace:
+#0 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'file_get_conten...', '/var/www/html/w...', 95, Array)
+#1 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Foundation/Console/KeyGenerateCommand.php(95): file_get_contents('/var/www/html/w...')
+#2 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Foundation/Console/KeyGenerateCommand.php(79): Illuminate\Foundation\Console\KeyGenerateCommand->writeNewEnvironmentFileWith('base64:RfsSgccv...')
+#3 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Foundation/Console/KeyGenerateCommand.php(44): Illuminate\Foundation\Console\KeyGenerateCommand->setKeyInEnvironmentFile('base64:RfsSgccv...')
+#4 [internal function]: Illuminate\Foundation\Console\KeyGenerateCommand->fire()
+#5 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#6 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#7 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#8 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Container/Container.php(539): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#9 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Console/Command.php(182): Illuminate\Container\Container->call(Array)
+#10 /var/www/html/wiploo/vendor/symfony/console/Command/Command.php(264): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#11 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Console/Command.php(167): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+#12 /var/www/html/wiploo/vendor/symfony/console/Application.php(869): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 /var/www/html/wiploo/vendor/symfony/console/Application.php(223): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Foundation\Console\KeyGenerateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#14 /var/www/html/wiploo/vendor/symfony/console/Application.php(130): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#15 /var/www/html/wiploo/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(122): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#16 /var/www/html/wiploo/artisan(35): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#17 {main}  
