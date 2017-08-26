@@ -36,13 +36,22 @@ Route::group(['middleware' => ['web'], 'prefix' => 'xdata'], function() {
 	Route::get('/category/{id}/edit',['as' => 'edit-category', 'uses' => 'Backend\CategoryController@edit']);
 	Route::post('/category/update',['as' => 'update-category', 'uses' => 'Backend\CategoryController@update']);
 	Route::get('/category/{id}/delete',['as' => 'bulk-category', 'uses' => 'Backend\CategoryController@delete_category']);
+	Route::get('/category/seo/{slug}',['as' => 'edit-category-seo', 'uses' => 'Backend\CategoryController@edit_seo']);
+
+	Route::get('/category/{id}/sub-category',['as' => 'sub-category-per-category', 'uses' => 'Backend\SubCategoryController@per_category']);
+	Route::get('/category/{id}/sub-category/add',['as' => 'add-sub-category', 'uses' => 'Backend\SubCategoryController@add']);
+	Route::post('/sub-category/add',['as' => 'store-sub-category', 'uses' => 'Backend\SubCategoryController@store']);
+	Route::get('/category/{category_id}/sub-category/{id}/edit',['as' => 'edit-sub-category', 'uses' => 'Backend\SubCategoryController@edit']);
+	Route::post('/sub-category/update',['as' => 'update-sub-category', 'uses' => 'Backend\SubCategoryController@update']);
+	Route::get('/category/{category_id}/sub-category/{id}/delete',['as' => 'bulk-sub-category', 'uses' => 'Backend\SubCategoryController@delete_category']);
+	Route::get('/category/{category_id}/seo/{slug}',['as' => 'edit-sub-category-seo', 'uses' => 'Backend\SubCategoryController@edit_seo']);
 	
 	Route::get('/articles',['as' => 'data-articles', 'uses' => 'Backend\ArticlesController@index']);
 	Route::get('/article/add',['as' => 'add-article', 'uses' => 'Backend\ArticlesController@addArticle']);
 	Route::post('/article/add',['as' => 'store-article', 'uses' => 'Backend\ArticlesController@store']);
 	Route::get('/article/{id}/edit',['as' => 'edit-article', 'uses' => 'Backend\ArticlesController@edit']);
 	Route::post('/article/update',['as' => 'update-article', 'uses' => 'Backend\ArticlesController@update']);
-	Route::get('/article/{id}/delete',['as' => 'bulk-article', 'uses' => 'Backend\CategoryController@delete_category']);
+	Route::get('/article/{id}/delete',['as' => 'bulk-article', 'uses' => 'Backend\ArticlesController@deleteArticle']);
 	
 	Route::get('/points',['as' => 'point-members', 'uses' => 'Backend\PointsController@index']);
 	

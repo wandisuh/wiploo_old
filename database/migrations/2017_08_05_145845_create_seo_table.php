@@ -13,7 +13,20 @@ class CreateSeoTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('seo', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('slug');
+            $table->string('title')->nullable();
+            $table->string('keywords')->nullable();
+            $table->string('description')->nullable();
+            $table->string('og_title')->nullable();
+            $table->string('og_description')->nullable();
+            $table->string('og_image')->nullable();
+            $table->string('og_url')->nullable();
+            $table->string('og_name')->nullable();
+            $table->string('og_type')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +36,6 @@ class CreateSeoTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('seo');
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\Seo;
 
 class CategoryController extends Controller
 {
@@ -37,6 +39,11 @@ class CategoryController extends Controller
 		$category->slug = str_slug($request->name);
 		$category->published = $request->published;
 		$category->save();
+
+		$seo = new Seo;
+		$seo->og_name = 'Wiploo';
+		$seo->slug = str_slug($request->name);
+		$seo->save();
 		
 		return redirect()->route('data-categories')->with('success','Data berhasil disimpan.');
 	}
@@ -47,8 +54,19 @@ class CategoryController extends Controller
 	}
 	
 	public function delete_category($id) {
-		$category = Category::find($id);
-		$category->delete();
+		$slug = Category::where('id',$id)->first();
+		
+		Category::where('id', $id)->delete();
+		Seo::where('slug', $slug->slug)->delete();
+
+		$sucategory = SubCategory::where('category_id',$id)->get();
+		if($sucategory) {
+			foreach ($sucategory as $key => $value) {
+				SubCategory::where('category_id',$value->id)->delete();
+				Seo::where('slug',$value->slug)->delete();
+			}
+		}
+
 		return redirect()->route('data-categories')->with('alert-success', 'berhasil dihapus.');
 	}
 	
@@ -58,7 +76,18 @@ class CategoryController extends Controller
 		$category->slug = str_slug($request->name);
 		$category->published = $request->published;
 		$category->save();
+
+		$seo = Seo::find($category->slug);
+		$seo->og_name = 'Wiploo';
+		$seo->slug = str_slug($request->name);
+		$seo->save();
+
 		return redirect()->route('data-categories')->with('alert-success', 'berhasil dihapus.');;
+	}
+
+	public function edit_seo($slug) {
+		$seo = Seo::where('slug',$slug)->first();
+		return $seo;
 	}
 	
 }

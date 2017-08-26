@@ -367,6 +367,7 @@ class ComposerStaticInitf9ffaf060bd5fec933b0505bceb03c84
         'CreateSeoTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_05_145845_create_seo_table.php',
         'CreateSubCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_05_144910_create_sub_categories_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateVideosTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_26_014234_create_videos_table.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
         'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/DayOfMonthField.php',

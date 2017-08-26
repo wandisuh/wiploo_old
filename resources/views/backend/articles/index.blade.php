@@ -10,7 +10,7 @@
 		<h3>&nbsp;</h3>
 	  </div>
 
-	  <div class="title_right">
+	  <div class="title_right hide">
 		<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
 		  <div class="input-group">
 			<input type="text" class="form-control" placeholder="Search for...">
@@ -69,8 +69,8 @@
 					  <td>{{ $article->author }}</td>
 					  <td>{{ $article->category_id }}</td>
 					  <td><img src="{{ asset('/upload/img_artikel/thumb_'.$article->image) }}" style="width:80px;"/></td>
-					  <td>{{ str_limit($article->content,25) }}</td>
 					  <td>{{ date('d F Y', strtotime($article->created_at)) }}</td>
+					  <td>{{ str_limit($article->content,25) }}</td>
 					  <td>
 						<a href="{{ route('edit-article', ['id'=> $article->id]) }}" type="button" class="btn btn-success btn-sm">Edit</a>
 						<button type="button" class="btn btn-sm btn-warning" onclick="sw_alert({{$article->id}})">Delete</button>

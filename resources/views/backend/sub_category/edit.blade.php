@@ -1,4 +1,6 @@
-<?php $__env->startSection('content'); ?>
+@extends('backend.layouts.layout')
+
+@section('content')
 
 <div class="right_col" role="main" style="min-height: 3576px;">
   <div class="">
@@ -28,23 +30,30 @@
 		  </div>
 		  <div class="x_content">
 			<br>
-			<?php if(count($errors) > 0): ?>
+			@if (count($errors) > 0)
 				<div class="alert alert-danger">
 					<ul>
-						<?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-							<li><?php echo e($error); ?></li>
-						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
 					</ul>
 				</div>
-			<?php endif; ?>
+			@endif
 	
-			<form class="form-horizontal form-label-left" method="POST" action="<?php echo e(route('store-category')); ?>">
-				<?php echo e(csrf_field()); ?>
-
+			<form class="form-horizontal form-label-left" method="POST" action="{{ route('update-sub-category') }}">
+				{{ csrf_field() }}
+				<input type="hidden" class="form-control" value="{{ $category->id }}" name="category_id">
 			  <div class="form-group">
 				<label class="control-label col-md-2 col-sm-3 col-xs-12">Nama Kategori</label>
 				<div class="col-md-5 col-sm-9 col-xs-12">
-				  <input type="text" class="form-control" value="<?php echo e(old('name')); ?>" name="name" required>
+				  <input type="text" class="form-control" value="{{ $category->name }}" name="name" readonly="">
+				  <input type="hidden" class="form-control" value="{{ $subcategory->id }}" name="id">
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-12">Nama Sub Kategori</label>
+				<div class="col-md-5 col-sm-9 col-xs-12">
+				  <input type="text" class="form-control" value="{{ $subcategory->name }}" name="name" required>
 				</div>
 			  </div>
 			  <div class="form-group">
@@ -52,8 +61,8 @@
 				<div class="col-md-4 col-sm-9 col-xs-12">
 				  <select class="form-control" name="published" required>
 					<option value="">Choose Status</option>
-					<option value="1">Publish</option>
-					<option value="0">Unpublish</option>
+					<option value="1" @if($subcategory->published==1) selected @endif >Publish</option>
+					<option value="0" @if($subcategory->published==0) selected @endif >Unpublish</option>
 				  </select>
 				</div>
 			  </div>
@@ -61,7 +70,7 @@
 			  <div class="ln_solid"></div>
 			  <div class="form-group">
 				<div class="col-md-9 col-sm-10 col-xs-12 col-md-offset-3">
-				  <a type="button" class="btn btn-primary" href="<?php echo e(route('data-categories')); ?>">Cancel</a>
+				  <a type="button" class="btn btn-primary" href="{{ route('data-categories') }}">Cancel</a>
 				  <button type="reset" class="btn btn-primary">Reset</button>
 				  <button type="submit" class="btn btn-success">Submit</button>
 				</div>
@@ -75,12 +84,11 @@
   </div>
 </div>
 
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('script'); ?>
-<script src="<?php echo e(asset('/assets/backend//vendors/validator/validator.js')); ?>"></script>
+@section('script')
+<script src="{{ asset('/assets/backend//vendors/validator/validator.js') }}"></script>
 <script>
 	initSample();
 </script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('backend.layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@endsection

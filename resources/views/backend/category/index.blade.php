@@ -10,7 +10,7 @@
 		<h3>&nbsp;</h3>
 	  </div>
 
-	  <div class="title_right">
+	  <div class="title_right hide">
 		<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
 		  <div class="input-group">
 			<input type="text" class="form-control" placeholder="Search for...">
@@ -57,6 +57,8 @@
 				  <th>Kategori</th>
 				  <th>Status</th>
 				  <th>Tanggal</th>
+				  <th>Sub Kategori</th>
+				  <th>Seo</th>
 				  <th>Action</th>
 				</tr>
 			  </thead>
@@ -65,8 +67,17 @@
 					<tr>
 					  <td>{{ $category->id }}</td>
 					  <td>{{ $category->name }}</td>
-					  <td>@if($category->published == 1) Publish @else Unpublish @endif </td>
+					  <td>
+					  	@if($category->published == 1) 
+					  		<input type="checkbox" name="published" id="published" value="{{ $category->published }}" checked="true"> publish
+					   	@else
+					   		<input type="checkbox" name="published" id="published" value="{{ $category->published }}"> Unpublish
+					   	@endif </td>
 					  <td>{{ $category->created_at }}</td>
+					  <td><a href="{{ route('sub-category-per-category', ['id' => $category->id]) }}" class="btn btn-success btn-sm">View Sub Kategori</a></td>
+					  <td>
+						<a href="{{ route('edit-category-seo', ['slug'=> $category->slug]) }}" type="button" class="btn btn-success btn-sm">Edit SEO</a>
+					  </td>
 					  <td>
 						<a href="{{ route('edit-category', ['id'=> $category->id]) }}" type="button" class="btn btn-success btn-sm">Edit</a>
 						<button type="button" class="btn btn-sm btn-warning" onclick="sw_alert({{$category->id}})">Delete</button>
@@ -87,6 +98,12 @@
 <script src="{{ asset('assets/sw_alert/dist/sweetalert-dev.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('assets/sw_alert/dist/sweetalert.css') }}">
 <script type="text/javascript">
+	$(document).ready(function() {
+		$('#published').on('checked', function() {
+			alert('ss');
+		});
+	});
+
 	function sw_alert(id) {
 		swal({
 		  title: "",//"Apakah anda ingin menghapus data ini?",

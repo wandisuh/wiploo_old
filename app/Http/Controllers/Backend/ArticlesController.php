@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Seo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
@@ -21,7 +22,7 @@ class ArticlesController extends Controller
 		
 	}
 	
-	public function index() {
+	public function index() { 
 		$articles = Article::get();
 		return view('backend.articles.index', compact('articles'));
 	}
@@ -62,13 +63,88 @@ class ArticlesController extends Controller
 		$article->content = $request->content;
 		$article->slug = str_slug($request->title);
 		$article->save();
+
+		$seo = new Seo;
+		$seo->og_name = 'Wiploo';
+		$seo->slug = str_slug($request->title);
+		$seo->save();
 		
 		return redirect()->route('data-articles')->with('success','Data berhasil disimpan.');
 	}
 	
-	public function editArticle() {}
+	public function edit($id) {
+		$article = Article::find($id);
+		$categories = Category::where('published', 1)->get();
+		return view('backend.articles.editArticle', compact('article','categories'));
+	}
 	
-	public function updateArticle() {}
+	public function update(Request $request) {
+		$validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'category_id' => 'required',
+            'image' => 'mimes:jpeg,jpg,png|max:2000',
+            'content' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+		
+		$destinationPath = 'upload/img_artikel/';
+		$imgFile = $request->file('image');
+		$cek_article = Article::where('id', $request->id)->first();
+
+		if($imgFile) { dd($imgFile);
+			$extension = $imgFile->getClientOriginalExtension();
+			$imgFileName = microtime(true) . '.' . $extension;
+			
+			//Create thumb
+			$thumbName = "thumb_" . $imgFileName;
+			Image::make($imgFile->getRealPath())->fit(self::THUMB_WIDTH, self::THUMB_HEIGHT)->save($destinationPath . $thumbName);
+
+			$imgFile->move($destinationPath, $imgFileName);
+			
+			$article = Article::find($request->id);
+			$article->title = $request->title;
+			$article->category_id = $request->category_id;
+			$article->author = 'Admin wiploo';
+			$article->image = $imgFileName;
+			$article->content = $request->content;
+			$article->slug = str_slug($request->title);
+			$article->save();
+
+			$seo = Seo::find($cek_article->slug);
+			$seo->og_name = 'Wiploo';
+			$seo->slug = str_slug($request->title);
+			$seo->save();
+		}else {
+			$article = Article::find($request->id);
+			$article->title = $request->title;
+			$article->category_id = $request->category_id;
+			$article->author = 'Admin wiploo';
+			$article->content = $request->content;
+			$article->slug = str_slug($request->title);
+			$article->save();
+
+			$seo = Seo::find($cek_article->slug);
+			$seo->og_name = 'Wiploo';
+			$seo->slug = str_slug($request->title);
+			$seo->save();
+		}
+		
+		
+		return redirect()->route('data-articles')->with('success','Data berhasil disimpan.');
+	}
 	
-	public function deleteArticle() {}
+	public function deleteArticle($id) {
+		$artikel = Article::where('id', $id)->first();
+
+		Article::where('id', $id)->delete();
+		Seo::where('slug', $artikel->slug)->delete();
+		
+		unlink('/var/www/html/wiploo/public/upload/img_artikel/'.$artikel->image);
+		unlink('/var/www/html/wiploo/public/upload/img_artikel/thumb_'.$artikel->image);
+
+		return redirect()->route('data-articles')->with('alert-success', 'berhasil dihapus.');
+	}
 }

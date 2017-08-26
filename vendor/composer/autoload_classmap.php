@@ -54,6 +54,7 @@ return array(
     'CreateSeoTable' => $baseDir . '/database/migrations/2017_08_05_145845_create_seo_table.php',
     'CreateSubCategoriesTable' => $baseDir . '/database/migrations/2017_08_05_144910_create_sub_categories_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreateVideosTable' => $baseDir . '/database/migrations/2017_08_26_014234_create_videos_table.php',
     'Cron\\AbstractField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
     'Cron\\CronExpression' => $vendorDir . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
     'Cron\\DayOfMonthField' => $vendorDir . '/mtdowling/cron-expression/src/Cron/DayOfMonthField.php',
