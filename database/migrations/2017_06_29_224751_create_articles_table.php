@@ -17,8 +17,10 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('author');
+            $table->string('email')->nullable();
             $table->integer('category_id');
             $table->string('image')->nullable();
+            $table->text('short_content')->nullable();
             $table->text('content');
 			$table->string('slug');
             $table->integer('published')->default('0');

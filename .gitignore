@@ -1,2 +1,6 @@
 .env
 /vendor
+
+/storage/*.key
+/.idea
+/public/upload

@@ -68,6 +68,12 @@
 				</div>
 			  </div>
 			  <div class="form-group">
+				<label class="control-label col-md-2 col-sm-3 col-xs-12">Konten Pendek</label>
+				<div class="col-sm-10 col-xs-12">
+				  <textarea name="short_content" class="form-control" required>{{ old('short_content') }}</textarea>
+				</div>
+			  </div>
+			  <div class="form-group">
 				<label class="control-label col-md-2 col-sm-3 col-xs-12">Konten</label>
 				<div class="col-sm-10 col-xs-12">
 				  <textarea id="editor" name="content" required>{{ old('content') }}</textarea>

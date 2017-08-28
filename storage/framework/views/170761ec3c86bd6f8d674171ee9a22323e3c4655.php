@@ -1,9 +1,9 @@
-@extends('backend.layouts.layout')
 
-@section('content')
-<script src="{{ asset('assets/ck_editor/ckeditor.js') }}"></script>
-<script src="{{ asset('assets/ck_editor/js/sample.js') }}"></script>
-<link rel="stylesheet" href="{{ asset('assets/ck_editor/css/samples.css') }}">
+
+<?php $__env->startSection('content'); ?>
+<script src="<?php echo e(asset('assets/ck_editor/ckeditor.js')); ?>"></script>
+<script src="<?php echo e(asset('assets/ck_editor/js/sample.js')); ?>"></script>
+<link rel="stylesheet" href="<?php echo e(asset('assets/ck_editor/css/samples.css')); ?>">
 <div class="right_col" role="main" style="min-height: 3576px;">
   <div class="">
 	<div class="clearfix"></div>
@@ -32,24 +32,25 @@
 		  </div>
 		  <div class="x_content">
 			<br>
-			@if (count($errors) > 0)
+			<?php if(count($errors) > 0): ?>
 				<div class="alert alert-danger">
 					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
+						<?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<li><?php echo e($error); ?></li>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 					</ul>
 				</div>
-			@endif
+			<?php endif; ?>
 	
-			<form class="form-horizontal form-label-left" method="POST" action="{{ route('update-article') }}" enctype="multipart/form-data">
-				{{ csrf_field() }}
-				<input type="hidden" class="form-control" value="{{ $article->id }}" name="id">
+			<form class="form-horizontal form-label-left" method="POST" action="<?php echo e(route('update-article')); ?>" enctype="multipart/form-data">
+				<?php echo e(csrf_field()); ?>
+
+				<input type="hidden" class="form-control" value="<?php echo e($article->id); ?>" name="id">
 
 			  <div class="form-group">
 				<label class="control-label col-md-2 col-sm-3 col-xs-12">Judul Artikel</label>
 				<div class="col-md-5 col-sm-9 col-xs-12">
-				  <input type="text" class="form-control" value="{{ $article->title }}" name="title" required>
+				  <input type="text" class="form-control" value="<?php echo e($article->title); ?>" name="title" required>
 				</div>
 			  </div>
 			  <div class="form-group">
@@ -57,41 +58,41 @@
 				<div class="col-md-4 col-sm-9 col-xs-12">
 				  <select class="form-control" name="category_id" required>
 					<option value="">Choose option</option>
-					@foreach($categories as $k => $category)
-					<option value="{{ $category->id }}">{{ $category->name }}</option>
-					@endforeach
+					<?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<option value="<?php echo e($category->id); ?>"><?php echo e($category->name); ?></option>
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				  </select>
 				</div>
 			  </div>
 			  <div class="form-group">
 				<label class="control-label col-md-2 col-sm-3 col-xs-12">Gambar</label>
 				<div class="col-md-4 col-sm-9 col-xs-12">
-				  <input type="file" class="form-control" value="{{ old('image') }}" name="image">
+				  <input type="file" class="form-control" value="<?php echo e(old('image')); ?>" name="image">
 				</div>
 			  </div>
 			  <div class="form-group">
 				<label class="control-label col-md-2 col-sm-3 col-xs-12">&nbsp;</label>
 				<div class="col-md-4 col-sm-9 col-xs-12">
-				  <img src="{{ asset('upload/img_artikel/thumb_').$article->image }}" style="height:120px;">
+				  <img src="<?php echo e(asset('upload/img_artikel/thumb_').$article->image); ?>" style="height:120px;">
 				</div>
 			  </div>
 			  <div class="form-group">
 				<label class="control-label col-md-2 col-sm-3 col-xs-12">Konten Pendek</label>
 				<div class="col-sm-10 col-xs-12">
-				  <textarea name="short_content" class="form-control" required>{{ $article->short_content }}</textarea>
+				  <textarea name="short_content" class="form-control" required><?php echo e($article->short_content); ?></textarea>
 				</div>
 			  </div>
 			  <div class="form-group">
 				<label class="control-label col-md-2 col-sm-3 col-xs-12">Konten</label>
 				<div class="col-sm-10 col-xs-12">
-				  <textarea id="editor" name="content" required>{{ $article->content }}</textarea>
+				  <textarea id="editor" name="content" required><?php echo e($article->content); ?></textarea>
 				</div>
 			  </div>
 			  
 			  <div class="ln_solid"></div>
 			  <div class="form-group">
 				<div class="col-md-9 col-sm-10 col-xs-12 col-md-offset-3">
-				  <a type="button" class="btn btn-primary" href="{{ route('data-articles') }}">Cancel</a>
+				  <a type="button" class="btn btn-primary" href="<?php echo e(route('data-articles')); ?>">Cancel</a>
 				  <button type="reset" class="btn btn-primary">Reset</button>
 				  <button type="submit" class="btn btn-success">Submit</button>
 				</div>
@@ -105,11 +106,12 @@
   </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-<script src="{{ asset('/assets/backend//vendors/validator/validator.js') }}"></script>
+<?php $__env->startSection('script'); ?>
+<script src="<?php echo e(asset('/assets/backend//vendors/validator/validator.js')); ?>"></script>
 <script>
 	initSample();
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('backend.layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

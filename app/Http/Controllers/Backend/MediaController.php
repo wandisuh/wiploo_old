@@ -7,5 +7,9 @@ use App\Http\Controllers\Controller;
 
 class MediaController extends Controller
 {
-    //
+    
+    public function __construct() {
+		$this->middleware('auth');
+	}
+	
 }

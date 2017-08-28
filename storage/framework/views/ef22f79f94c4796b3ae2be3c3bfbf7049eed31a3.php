@@ -10,16 +10,16 @@
     <title>Wiploo | Inspirasi Kita</title>
 
     <!-- Bootstrap -->
-    <link href="{{asset('assets/backend')}}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/backend')); ?>/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{asset('assets/backend')}}/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/backend')); ?>/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{asset('assets/backend')}}/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/backend')); ?>/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="{{asset('assets/backend')}}/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/backend')); ?>/vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{asset('assets/backend')}}/build/css/custom.min.css" rel="stylesheet">
+    <link href="<?php echo e(asset('assets/backend')); ?>/build/css/custom.min.css" rel="stylesheet">
   </head>
 
   <body class="login">
@@ -30,8 +30,9 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form method="post" action="{{ route('xdata-login-post') }}">
-				      {{ csrf_field() }}
+            <form method="post" action="<?php echo e(route('xdata-login-post')); ?>">
+				      <?php echo e(csrf_field()); ?>
+
               <h1>Login Form</h1>
               <div>
                 <input type="text" name="email" class="form-control" placeholder="Email" required="" />
@@ -62,8 +63,9 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form action="{{ route('xdata-register-post') }}" method="post">
-              {{ csrf_field() }}
+            <form action="<?php echo e(route('xdata-register-post')); ?>" method="post">
+              <?php echo e(csrf_field()); ?>
+
               <h1>Create Account</h1>
               <div>
                 <input type="text" name="name" class="form-control" placeholder="Name" required="" />

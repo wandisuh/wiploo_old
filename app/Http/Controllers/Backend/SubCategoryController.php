@@ -12,6 +12,10 @@ use App\Models\Seo;
 class SubCategoryController extends Controller
 {
     //
+    public function __construct() {
+		$this->middleware('auth');
+	}
+	
     public function per_category($id) {
     	$subcategories = SubCategory::where('category_id', $id)->get();
     	$category = Category::where('id', $id)->first();

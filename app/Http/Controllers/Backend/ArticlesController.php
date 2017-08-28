@@ -15,11 +15,14 @@ use File;
 
 class ArticlesController extends Controller
 {
-	const THUMB_WIDTH = 260;
-    const THUMB_HEIGHT = 200;
+	const THUMB_WIDTH = 68;
+    const THUMB_HEIGHT = 55;
+
+    const X_WIDTH = 409;
+    const X_HEIGHT = 333;
     //
 	public function __construct() {
-		
+		$this->middleware('auth');
 	}
 	
 	public function index() { 
@@ -60,6 +63,7 @@ class ArticlesController extends Controller
 		$article->category_id = $request->category_id;
 		$article->author = 'Admin wiploo';
 		$article->image = $imgFileName;
+		$article->short_content = $request->short_content;
 		$article->content = $request->content;
 		$article->slug = str_slug($request->title);
 		$article->save();
@@ -100,15 +104,22 @@ class ArticlesController extends Controller
 			
 			//Create thumb
 			$thumbName = "thumb_" . $imgFileName;
+			$xName = "x_" . $imgFileName;
 			Image::make($imgFile->getRealPath())->fit(self::THUMB_WIDTH, self::THUMB_HEIGHT)->save($destinationPath . $thumbName);
+			Image::make($imgFile->getRealPath())->fit(self::X_WIDTH, self::X_HEIGHT)->save($destinationPath . $xName);
 
 			$imgFile->move($destinationPath, $imgFileName);
+
+			unlink('/var/www/html/wiploo/public/upload/img_artikel/'.$cek_article->image);
+			unlink('/var/www/html/wiploo/public/upload/img_artikel/thumb_'.$cek_article->image);
+			unlink('/var/www/html/wiploo/public/upload/img_artikel/x_'.$cek_article->image);
 			
 			$article = Article::find($request->id);
 			$article->title = $request->title;
 			$article->category_id = $request->category_id;
 			$article->author = 'Admin wiploo';
 			$article->image = $imgFileName;
+			$article->short_content = $request->short_content;
 			$article->content = $request->content;
 			$article->slug = str_slug($request->title);
 			$article->save();
@@ -122,6 +133,7 @@ class ArticlesController extends Controller
 			$article->title = $request->title;
 			$article->category_id = $request->category_id;
 			$article->author = 'Admin wiploo';
+			$article->short_content = $request->short_content;
 			$article->content = $request->content;
 			$article->slug = str_slug($request->title);
 			$article->save();
@@ -144,6 +156,7 @@ class ArticlesController extends Controller
 		
 		unlink('/var/www/html/wiploo/public/upload/img_artikel/'.$artikel->image);
 		unlink('/var/www/html/wiploo/public/upload/img_artikel/thumb_'.$artikel->image);
+		unlink('/var/www/html/wiploo/public/upload/img_artikel/x_'.$artikel->image);
 
 		return redirect()->route('data-articles')->with('alert-success', 'berhasil dihapus.');
 	}
